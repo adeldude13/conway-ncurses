@@ -1,3 +1,7 @@
+![scr1](./Pics/scr1.png)
+![scr2](./Pics/scr2.png)
+
+
 ## conway-ncurses
 An Ncurses implementation of [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway's_Game_of_Life)
 

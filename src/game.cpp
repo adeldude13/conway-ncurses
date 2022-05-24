@@ -20,10 +20,11 @@ Game::Game() {
 		std::vector<int> tmp;	
 		for(int j = 0; j<x;j++) {
 			float r = (float)(rand())/(float)RAND_MAX;
-			tmp.push_back(r > 0.5 ? 1 : 0);
+			tmp.push_back(r > 0.9 ? 1 : 0);
 		}
 		this->arr.push_back(tmp);
 	}
+	curs_set(0);
 	timeout(400);
 }
 
@@ -32,30 +33,32 @@ void Game::exit() {
 }
 
 void Game::render() {
-		for(int y=0; y<this->y; y++) {
-				for(int x = 0; x<this->x;x++) {
-					int right = checkRight(y, x) + checkRight(y+1, x) + checkRight(y-1, x);
-					int left = checkLeft(y, x) + checkLeft(y+1, x) + checkLeft(y-1, x);
-					int bottom = checkBottom(y, x);
-					int top = checkTop(y, x);
-					int sum = right + left + bottom + top;
-					if(this->arr[y][x] == 1) {
-						if(sum < 2) {
-							this->arr[y][x] = 0;
-						} else if(sum > 3) {
-							this->arr[y][x] = 0;
-					}	
-					} else if(sum == 3) {
-						this->arr[y][x] = 1;
-					}
-				}
-		}
-		clear();	
-		for(int y=0; y<this->y;y++) {
-			for(int x = 0; x<this->x;x++) {
-				addstr(this->arr[y][x] == 1 ? "▀" : " ");	
+	vector<vector<int>> newState = this->arr;
+	for(int y=0; y<this->y; y++) {
+		for(int x = 0; x<this->x;x++) {
+			int right = checkRight(y, x) + checkRight(y+1, x) + checkRight(y-1, x);
+			int left = checkLeft(y, x) + checkLeft(y+1, x) + checkLeft(y-1, x);
+			int bottom = checkBottom(y, x);
+			int top = checkTop(y, x);
+			int sum = right + left + bottom + top;
+			if(this->arr[y][x] == 1) {
+				if(sum < 2) {
+					newState[y][x] = 0;
+				} else if(sum > 3) {
+					newState[y][x] = 0;
+				}	
+			} else if(sum == 3) {
+				newState[y][x] = 1;
 			}
 		}
+	}
+	this->arr = newState;
+	clear();
+	for(int y=0; y<this->y;y++) {
+		for(int x = 0; x<this->x;x++) {
+			addstr(this->arr[y][x] == 1 ? "▀" : " ");	
+		}
+	}
 	refresh();
 }
 
