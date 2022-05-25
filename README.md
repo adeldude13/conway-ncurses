@@ -7,11 +7,15 @@ An Ncurses implementation of [Conway's Game of Life](https://en.wikipedia.org/wi
 
 ## Building
 - ncurses and cursesw is required to build and run the program
-- To Build And Run
+- To Build 
 ```
 $ make
 ```
-- if you want you can remove the debug flags from the makeFile(-ggdb3, -O0) that will make the program blazingly fast(although its already blazingly fast)
+then you will find the executable in the bin folder
 
-## current progress
-_this program is currently at the building stage, its good enough to generate random state of life and change it according to the game rules_
+# game Controls
+* `return or enter`, `s` - play/pause the game
+* `-` - decrease speed of the game
+* `+` - increase speed of the game
+* `n` - skip to the next generation
+* `q` - quit

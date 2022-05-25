@@ -16,6 +16,8 @@ class Game {
 		void render();
 		void loop();
 		void input();
+		void INC();
+		void DEC();
 		int checkLeft(int, int);
 		int checkRight(int, int);
 		int checkTop(int, int);
@@ -25,6 +27,7 @@ class Game {
 		std::vector<std::vector<int>> arr;
 		int isRunning = 1;
 		State state = NONSTOP;
+		unsigned short speed = 200;
 };
 
 #endif

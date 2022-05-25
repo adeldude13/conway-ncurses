@@ -3,8 +3,14 @@
 #include <time.h>
 #include <cursesw.h>
 #include <math.h>
+#include <inttypes.h>
+
+#define MAX 1000
+#define MIN 20
 
 using namespace std;
+
+
 
 Game::Game() {
 	initscr();
@@ -25,7 +31,7 @@ Game::Game() {
 		this->arr.push_back(tmp);
 	}
 	curs_set(0);
-	timeout(400);
+	timeout(this->speed);
 }
 
 void Game::exit() {
@@ -56,10 +62,24 @@ void Game::render() {
 	clear();
 	for(int y=0; y<this->y;y++) {
 		for(int x = 0; x<this->x;x++) {
-			addstr(this->arr[y][x] == 1 ? "▀" : " ");	
+			addstr(this->arr[y][x] == 1 ? "▇" : " ");	
 		}
 	}
 	refresh();
+}
+
+void Game::DEC() {
+	if(this->speed == MAX) {
+		return;
+	}
+	this->speed += 20;
+}
+
+void Game::INC() {
+	if(this->speed == MIN) {
+		return;
+	}
+	this->speed -= 20;
 }
 
 void Game::input() {
@@ -67,6 +87,10 @@ void Game::input() {
 	if(c == 'q') this->isRunning = 0;
 	if(c == 's') this->state = STOP;
 	if(c == '\n') this->state = NONSTOP;
+	if(c == '-') this->DEC();
+	if(c == '+') this->INC();
+	if(c == 'g') this->render();
+	timeout(this->speed);
 }
 
 
@@ -103,5 +127,3 @@ void Game::loop() {
 	}
 	this->exit();
 }
-
-
